@@ -12,8 +12,13 @@ function IndexPage () {
         <li>
           <Link to='/figure/explorer'> Figure Explorer
           </Link>
-        </li><li>
+        </li>
+        <li>
           <Link to='/figure/grid'> Figure Grid
+          </Link>
+        </li>
+        <li>
+          <Link to='/figure/finder'> Figure Finder
           </Link>
         </li>
       </ul>
