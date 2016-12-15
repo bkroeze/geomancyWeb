@@ -1,19 +1,19 @@
-import {
-  Figure
-} from 'geomancy';
+import {Figure} from 'geomancy';
+
 export default {
   namespace: 'figure-explorer',
   state: {
     selected: Figure.byName('populus')
   },
   reducers: {
-    select(state, action) {
+    SELECT_FIGURE: function(state, action) {
       try {
-        figure = Figure.byName(action.payload);
+        const figure = Figure.byName(action.payload);
         return {...state,
           selected: figure
         };
       } catch (e) {
+        log.error(e);
         return state;
       }
     }

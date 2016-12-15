@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
+// import { bindActionCreators } from 'redux'
 import styles from './FigureExplorer.css';
 import FigureDetails from '../components/FigureDetails';
+import FigureChooser from '../components/FigureChooser';
 import Logger from 'js-logger';
+import { actions } from '../models/figure-explorer';
 const log = Logger.get('<FigureExplorer>');
 
 const dotAttribs = {
@@ -13,9 +16,21 @@ const dotAttribs = {
 };
 
 function FigureExplorer (props) {
+  log.info('props', props);
+
+  function selectFigure (val) {
+    log.info('Selecting Figure: ' + val);
+    props.dispatch({type: 'figure-explorer/SELECT_FIGURE', payload: val});
+  }
+
   return (
     <div className={styles.normal}>
-      <FigureDetails figure={props.selected} />
+      <div className={styles.figureChooser}>
+        <FigureChooser select={selectFigure} selected={props.selected} />
+      </div>
+      <div className={styles.FigureDetails}>
+        <FigureDetails figure={props.selected} />
+      </div>
     </div>
   );
 }
