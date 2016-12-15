@@ -1,0 +1,14 @@
+
+.normal {
+}
+
+.figureName {
+  font-weight: bold;
+  font-size: 1.4em;
+  padding-top: 1em
+}
+
+.figureCell {
+  text-align: center;
+  margin: 2em 0;
+}
