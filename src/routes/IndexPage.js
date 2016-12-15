@@ -10,7 +10,10 @@ function IndexPage () {
       <div className={styles.welcome} />
       <ul className={styles.list}>
         <li>
-          <Link to='/figure-explorer'> Figure Explorer
+          <Link to='/figure/explorer'> Figure Explorer
+          </Link>
+        </li><li>
+          <Link to='/figure/grid'> Figure Grid
           </Link>
         </li>
       </ul>

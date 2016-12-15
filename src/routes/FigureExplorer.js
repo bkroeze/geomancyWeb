@@ -8,18 +8,8 @@ import Logger from 'js-logger';
 import { actions } from '../models/figure-explorer';
 const log = Logger.get('<FigureExplorer>');
 
-const dotAttribs = {
-  r: '8',
-  stroke: '#888888',
-  'stroke-width': '1',
-  fill: 'black'
-};
-
 function FigureExplorer (props) {
-  log.info('props', props);
-
   function selectFigure (val) {
-    log.info('Selecting Figure: ' + val);
     props.dispatch({type: 'figure-explorer/SELECT_FIGURE', payload: val});
   }
 

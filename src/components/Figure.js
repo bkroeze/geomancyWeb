@@ -13,7 +13,7 @@ export class Figure extends React.Component {
                key={'line' + line}
                cx='40'
                cy={y}
-               r='7'
+               r='8'
                stroke='#888888 stroke-width=1'
                fill='black' />;
     }else {

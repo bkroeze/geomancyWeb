@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './FigureChooser.css';
-import Select from 'react-select';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import { Figures } from 'geomancy';
 import Logger from 'js-logger';
 const log = Logger.get('<FigureChooser>');
@@ -13,27 +14,27 @@ class FigureChooser extends React.Component {
   getFigureOptions () {
     const opts = [];
     for (let [key, fig] of Object.entries(Figures)) {
-      opts.push({label: fig.name, value: fig.name});
+      opts.push(
+        <MenuItem value={fig.name} primaryText={fig.name} key={'fig:' + fig.flags}/>
+      );
     }
-    log.debug('opts', opts);
     return opts;
   }
 
-  select (val) {
-    log.info('Selected: ', val, this, this.props);
-    this.props.select(val);
-  }
+
 
   render () {
-    const select = (val) => {
-      this.select(val.value);
+    const options = this.getFigureOptions();
+    const select = (event, index, val) => {
+      //log.info('Selected: ', event, index, val);
+      log.info('props', val, this.props);
+      this.props.select(val);
     };
+
     return (
-      <Select
-        name='form-field-name'
-        value={this.props.selected.name}
-        options={this.getFigureOptions()}
-        onChange={select} />
+      <SelectField floatingLabelText='Choose Geomantic Figure' value={this.props.selected.name} onChange={select}>
+        {options}
+      </SelectField>
     );
   }
 }

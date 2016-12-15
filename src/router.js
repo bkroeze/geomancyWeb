@@ -4,11 +4,17 @@ import IndexPage from './routes/IndexPage';
 
 import FigureExplorer from './routes/FigureExplorer.js';
 
+import FigureGrid from './routes/FigureGrid.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 export default function({ history }) {
   return (
-    <Router history={history}>
-      <Route path='/' component={IndexPage} />
-      <Route path='/figure-explorer' component={FigureExplorer} />
-    </Router>
+    <MuiThemeProvider>
+      <Router history={history}>
+        <Route path='/' component={IndexPage} />
+        <Route path='/figure/explorer' component={FigureExplorer} />
+        <Route path='/figure/grid' component={FigureGrid} />
+      </Router>
+    </MuiThemeProvider>
   );
 };

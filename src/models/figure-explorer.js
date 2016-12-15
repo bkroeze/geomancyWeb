@@ -1,4 +1,6 @@
 import {Figure} from 'geomancy';
+import Logger from 'js-logger';
+const log = Logger.get('figure-explorer');
 
 export default {
   namespace: 'figure-explorer',
