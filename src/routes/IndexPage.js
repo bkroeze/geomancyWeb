@@ -21,6 +21,10 @@ function IndexPage () {
           <Link to='/figure/finder'> Figure Finder
           </Link>
         </li>
+        <li>
+          <Link to='/chart/shield'> Shield Chart
+          </Link>
+        </li>
       </ul>
     </div>
   );
