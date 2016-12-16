@@ -18,7 +18,7 @@ Logger.useDefaults({
 const app = dva();
 
 app.model(require('./models/figure-explorer'));
-app.model(require("./models/figure-builder"));
+app.model(require('./models/figure-finder'));
 
 // 2. Plugins
 const loggerOpts = {};
