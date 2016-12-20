@@ -3,8 +3,18 @@ import styles from './ShieldChartBG.css';
 
 function ShieldChart (props) {
   // transform='matrix(1.0166983,0,0,1.1046738,-5.5509863,-27.515956)
+
+  let [x, y, maxX, maxY] = props.viewBox;
+
+  const scaleX = ((maxX - x) / 200);
+  const scaleY = ((maxY - y) / 150);
+  x = (-261 + x) * scaleX;
+  y = (-184 + y) * scaleY;
+
+  const transform = `translate(${x} ${y}) scale(${scaleX} ${scaleY})`;
+
   return (
-    <g transform='translate(-261 -184)'>
+    <g transform={transform}>
       <path id='path3796' d='m 262.49031,185.27009 194.68502,0 0,90.16614 c 0.38628,44.15734 -85.65374,26.58427 -97.34252,44.0181 l 0,0 c -11.68878,-17.67049 -97.06935,-0.0222 -97.3425,-44.72808 z'
         style={{fill: 'none',stroke: '#000000','strokeWidth': 1.63303113,'strokeLinecap': 'butt','strokeLinejoin': 'round','strokeMiterlimit': 4,'strokeDasharray': 'none','strokeOpacity': 1}} />
       <path id='path3798' d='m 262.50778,229.96205 194.47643,-0.25101 -0.27314,-0.50202' style={{fill: 'none',stroke: '#000000','strokeWidth': 1.63303113,'strokeLinecap': 'butt','strokeLinejoin': 'miter','strokeMiterlimit': 4,'strokeDasharray': 'none','strokeOpacity': 1}} />
