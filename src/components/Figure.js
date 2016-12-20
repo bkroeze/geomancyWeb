@@ -7,11 +7,7 @@ export class Figure extends React.Component {
   constructor (props) {
     super(props);
     log.info('Props', props);
-    let {viewBox} = props;
-    if (!viewBox) {
-      viewBox = [0, 0, 200, 150];
-    }
-    this.viewBox = viewBox;
+    this.scale = this.props.scale || 1;
     log.info('ViewBox', this.viewBox);
   }
 
@@ -50,16 +46,12 @@ export class Figure extends React.Component {
       this.makeElementLine(2),
       this.makeElementLine(3)
     ];
-    let [vX, vY, maxX, maxY] = this.viewBox;
-    let scaleX = (maxX - vX) / 200 / 4;
-    let scaleY = (maxY - vY) / 150 / 4;
     let {x, y} = this.props;
     if (!x) x = 0;
     if (!y) y = 0;
-    x = x * scaleX;
-    y = y * scaleY;
-    log.info('pos', x, y, maxX, maxY, scaleX, scaleY);
-    const translate = `translate(${x},${y}) scale(${scaleX} ${scaleY})`;
+    x = x * this.scale;
+    y = y * this.scale;
+    const translate = `translate(${x},${y}) scale(${this.props.scale})`;
     return (
       <g transform={translate}>
         {lines}

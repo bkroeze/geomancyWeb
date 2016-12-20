@@ -31,6 +31,8 @@ class ShieldChart extends React.Component {
 
     this.props.chart.shieldKeys.forEach((key, ix) => {
       let [x, y] = coords[ix];
+      const [vX, vY, maxX, maxY] = this.props.viewBox;
+      const scale = (maxX - vX) / 200 / 4;
       figures.push(
         <Figure
           figure={fields.get(key)}
@@ -38,7 +40,7 @@ class ShieldChart extends React.Component {
           label={key}
           x={x}
           y={y}
-          viewBox={viewBox} />
+          scale={scale} />
       );
     });
 
