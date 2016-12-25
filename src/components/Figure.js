@@ -8,7 +8,7 @@ export class Figure extends React.Component {
     super(props);
     log.info('Props', props);
     this.scale = this.props.scale || 1;
-    log.info('ViewBox', this.viewBox);
+  // log.info('ViewBox', this.viewBox)
   }
 
   makeElementLine (line) {
@@ -21,7 +21,7 @@ export class Figure extends React.Component {
                 r='8'
                 stroke='#888888 stroke-width=1'
                 fill='black' />);
-    }else {
+    } else {
       return (<g key={'line' + line}>
                 <circle
                   cx='15'
@@ -53,8 +53,15 @@ export class Figure extends React.Component {
     y = y * this.scale;
     const translate = `translate(${x},${y}) scale(${this.props.scale})`;
     return (
-      <g transform={translate}>
+      <g transform={translate} className={styles.figure}>
         {lines}
+        <rect
+          className={styles.button}
+          ref={e => this.hitBox = e}
+          x={0}
+          y={0}
+          width={90}
+          height={150} />
       </g>
     );
   }

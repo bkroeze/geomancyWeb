@@ -5,11 +5,19 @@ import Figure from './Figure';
 import Logger from 'js-logger';
 const log = Logger.get('<ShieldChart>');
 
+function makeNoop (name) {
+  log.debug('Noop ' + name);
+  return (evt) => {
+    log.info(name + ' clicked');
+  };
+}
+
 class ShieldChart extends React.Component {
-  render () {
-    const figures = [];
-    const fields = this.props.chart.getShield();
-    const coords = [
+
+  constructor (props) {
+    super(props);
+    this.clicks = this.props.fieldClickActions || [];
+    this.coords = [
       [695, 20],
       [595, 20],
       [500, 20],
@@ -26,18 +34,31 @@ class ShieldChart extends React.Component {
       [155, 370],
       [355, 400]
     ];
-    log.info('ViewBox', this.props.viewBox);
+  }
+
+  handleClick (coords) {
+    log.debug('coords', coords);
+  // next calculate which field was hit.
+  }
+
+  render () {
+    const figures = [];
+    const fields = this.props.chart.getShield();
+
+    // log.info('ViewBox', this.props.viewBox)
     const {viewBox} = this.props;
 
     this.props.chart.shieldKeys.forEach((key, ix) => {
-      let [x, y] = coords[ix];
+      let [x, y] = this.coords[ix];
       const [vX, vY, maxX, maxY] = this.props.viewBox;
       const scale = (maxX - vX) / 200 / 4;
+      let onClick = this.clicks[ix] || makeNoop(key);
       figures.push(
         <Figure
           figure={fields.get(key)}
           field={ix}
           label={key}
+          key={key}
           x={x}
           y={y}
           scale={scale} />
@@ -46,8 +67,8 @@ class ShieldChart extends React.Component {
 
     return (
       <g className={styles.normal}>
-        {figures}
         <ShieldChartBG viewBox={this.props.viewBox} />
+        {figures}
       </g>
     );
   }

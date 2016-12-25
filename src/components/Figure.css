@@ -1,3 +1,13 @@
+.figure {
+  pointer-events: none;
+}
+
+.button {
+  stroke: #fff;
+  fill: #fff;
+  fill-opacity: 0;
+  stroke-opacity: 0;
+}
 
 .normal {
 }
