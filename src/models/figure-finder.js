@@ -1,12 +1,9 @@
 import {Figure} from 'geomancy';
 import Logger from 'js-logger';
+import { makeElements } from '../utils/figure';
 const log = Logger.get('figure-finder');
 
 const populus = Figure.byName('populus');
-
-function makeElements (fig) {
-  return {fire: fig.fire, air: fig.air, water: fig.water, earth: fig.earth};
-}
 
 export default {
   namespace: 'figure-finder',

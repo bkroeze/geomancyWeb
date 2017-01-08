@@ -1,50 +1,42 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Chart } from 'geomancy';
 import styles from './ChartShield.css';
-import ShieldChart from '../components/ShieldChart';
-import Logger from "js-logger";
-const log = Logger.get("<ChartShield>");
+import ShieldChartMaker from '../components/ShieldChartMaker';
+import Logger from 'js-logger';
+const log = Logger.get('<ChartShield>');
 
 class ChartShield extends React.Component {
-  eventToSvgCoords (e) {
-    var pt = this.svg.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-    pt = pt.matrixTransform(this.svg.getScreenCTM().inverse());
-    const coords = [pt.x, pt.y];
-    log.info('ChartShield click: ', coords);
-    return coords;
-  }
 
   render () {
-    const chart = new Chart();
-    const onClick = (e) => {
-      console.log('clicked shield', e);
-      let coords = this.eventToSvgCoords(e);
-      this.shieldChart.handleClick(coords);
+    const selectFigure = (val) => {
+      // log.info('Selected: ', event, index, val)
+      this.props.dispatch({type: 'chart-shield/SELECT_FIGURE', payload: val});
     };
 
+    const selectField = (val) => {
+      this.props.dispatch({type: 'chart-shield/SELECT_FIELD', payload: val});
+    };
+
+    const viewbox = [0, 0, 1000, 750];
+
     return (
-      <div className={styles.normal}
-        onClick={onClick}
-        >
-        <svg
-          viewBox='0 0 1000 750'
-          width='400'
-          height='305'
-          ref={(ref) => { this.svg = ref; }}
-          eventToSvgCoords={this.eventToSvgCoords}
-          style={{pointerEvents: 'none'}}>
-          <ShieldChart viewBox={[0, 0, 1000, 750]} chart={chart} ref={(ref) => { this.shieldChart = ref; }} />
-        </svg>
+      <div className={styles.normal}>
+        <ShieldChartMaker
+          viewBox={viewbox}
+          chart={this.props.chart}
+          field={this.props.field}
+          onFigureSelect={selectFigure}
+          onFieldSelect={selectField} />
       </div>
     );
   }
 }
 
 function mapStateToProps (state) {
-  return {};
+  return {
+    chart: state['chart-shield'].chart,
+    field: state['chart-shield'].field
+  };
 }
 
 export default connect(mapStateToProps)(ChartShield);

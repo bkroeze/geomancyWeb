@@ -16,7 +16,6 @@ class ShieldChart extends React.Component {
 
   constructor (props) {
     super(props);
-    this.clicks = this.props.fieldClickActions || [];
     this.coords = [
       [695, 20],
       [595, 20],
@@ -36,11 +35,6 @@ class ShieldChart extends React.Component {
     ];
   }
 
-  handleClick (coords) {
-    log.debug('coords', coords);
-  // next calculate which field was hit.
-  }
-
   render () {
     const figures = [];
     const fields = this.props.chart.getShield();
@@ -52,7 +46,6 @@ class ShieldChart extends React.Component {
       let [x, y] = this.coords[ix];
       const [vX, vY, maxX, maxY] = this.props.viewBox;
       const scale = (maxX - vX) / 200 / 4;
-      let onClick = this.clicks[ix] || makeNoop(key);
       figures.push(
         <Figure
           figure={fields.get(key)}
