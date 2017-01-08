@@ -13,6 +13,8 @@ export class Figure extends React.Component {
 
   makeElementLine (line) {
     const y = line * 23 + 15;
+    const fill = this.props.selected ? 'red' : 'black';
+
     if (this.props.figure.getLine(line)) {
       return (<circle
                 key={'line' + line}
@@ -20,7 +22,7 @@ export class Figure extends React.Component {
                 cy={y}
                 r='8'
                 stroke='#888888 stroke-width=1'
-                fill='black' />);
+                fill={fill} />);
     } else {
       return (<g key={'line' + line}>
                 <circle
@@ -28,13 +30,13 @@ export class Figure extends React.Component {
                   cy={y}
                   r='8'
                   stroke='#888888 stroke-width=1'
-                  fill='black' />
+                  fill={fill} />
                 <circle
                   cx='65'
                   cy={y}
                   r='8'
                   stroke='#888888 stroke-width=1'
-                  fill='black' />
+                  fill={fill} />
               </g>);
     }
   }

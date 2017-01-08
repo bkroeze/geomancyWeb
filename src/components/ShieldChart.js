@@ -40,7 +40,7 @@ class ShieldChart extends React.Component {
     const fields = this.props.chart.getShield();
 
     // log.info('ViewBox', this.props.viewBox)
-    const {viewBox} = this.props;
+    const {viewBox, selectedField} = this.props;
 
     this.props.chart.shieldKeys.forEach((key, ix) => {
       let [x, y] = this.coords[ix];
@@ -54,7 +54,8 @@ class ShieldChart extends React.Component {
           key={key}
           x={x}
           y={y}
-          scale={scale} />
+          scale={scale}
+          selected={selectedField == ix} />
       );
     });
 
