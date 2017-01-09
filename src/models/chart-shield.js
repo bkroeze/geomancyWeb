@@ -1,4 +1,4 @@
-import { Chart, ChartSequence } from 'geomancy';
+import { Chart, ChartSequence, Figure } from 'geomancy';
 import Logger from "js-logger";
 const log = Logger.get("models/chart-shield");
 
@@ -18,6 +18,18 @@ export default {
     },
     SELECT_FIELD: function(state, action) {
       return { ... state, field: action.payload };
+    },
+    SELECT_SEEDS: function(state, action) {
+      const seeds = action.payload;
+      let figure;
+      for (let ix=0; ix<seeds.length; ix++) {
+        figure = Figure.byName(seeds[ix]);
+        if (figure) {
+          seq.set(ix, figure);
+        }
+      }
+      const chart = new Chart(seq);
+      return { ...state, chart };
     }
   },
   effects: {},

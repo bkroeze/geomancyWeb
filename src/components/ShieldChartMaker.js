@@ -7,14 +7,14 @@ import FigureBuilder from './FigureBuilder';
 import ShieldChart from './ShieldChart';
 import { makeElements } from '../utils/figure';
 import Logger from 'js-logger';
-const log = Logger.get('<ShieldChartBuilder>');
+const log = Logger.get('<ShieldChartMaker>');
 
 function ShieldChartBuilder (props) {
   const { chart, field } = props;
   const houses = chart.getHouses();
   const figure = houses[field].figure;
   const elements = makeElements(figure);
-  log.info('rendering', field, houses, figure.name, elements);
+  // log.info('rendering', field, houses, figure.name, elements)
 
   const nextField = () => {
     log.info('next field: ', field + 1);

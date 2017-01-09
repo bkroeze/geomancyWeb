@@ -6,7 +6,7 @@ const log = Logger.get('<Figure>');
 export class Figure extends React.Component {
   constructor (props) {
     super(props);
-    log.info('Props', props);
+    // log.info('Props', props)
     this.scale = this.props.scale || 1;
   // log.info('ViewBox', this.viewBox)
   }
