@@ -10,35 +10,40 @@ export class ElementLine extends React.Component {
     line: T.number.isRequired,
     width: T.number.isRequired,
     height: T.number.isRequired,
-    active: T.bool
+    active: T.bool,
+    selected: T.bool
+  }
+
+  static defaultProps = {
+    selected: false
   }
 
   render () {
-    const {line} = this.props
-    const y = line * (this.props.height/4);
-    const fill = this.props.selected ? 'red' : 'black';
-    const radius = Math.round(this.props.width/8);
+    const {line, height, width, active, selected} = this.props;
+    const y = Math.round(line * (height/4));
+    const fill = selected ? 'red' : 'black';
+    const radius = Math.round(width/8);
 
-    if (this.props.active) {
-      log.info('returning active line');
-      return (<Circle
-                key={'line' + line}
-                x={this.props.width/2}
-                y={y}
-                radius={radius}
-                fill={fill} />);
+    if (active) {
+      return (
+        <Circle
+          key={'line' + line}
+          x={Math.round(width/2)}
+          y={y}
+          radius={radius}
+          fill={fill} />
+      );
     }
-    log.info('returning passive line');
     return (
       <Group key={'line' + line}>
         <Circle
-          x={this.props.width/4}
+          x={Math.round(width/4)}
           y={y}
           radius={radius}
           fill={fill} />
 
         <Circle
-          x={this.props.width*3/4}
+          x={Math.round(width*3/4)}
           y={y}
           radius={radius}
           fill={fill} />

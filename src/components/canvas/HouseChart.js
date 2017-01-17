@@ -28,7 +28,6 @@ class HouseChart extends React.Component {
   }
 
   componentDidMount () {
-    log.debug('stopping rt-click', this.layer);
     stopRightClick(this.layer.canvas._canvas);
   }
 
