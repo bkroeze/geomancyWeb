@@ -8,7 +8,7 @@ export default {
   namespace: 'chart-house',
   state: {
     chart: new Chart(seq),
-    field: 0
+    house: 0
   },
   reducers: {
     SELECT_FIGURE: function(state, action) {
@@ -16,8 +16,8 @@ export default {
       const chart = new Chart(seq);
       return { ...state, chart };
     },
-    SELECT_FIELD: function(state, action) {
-      return { ... state, field: action.payload };
+    SELECT_HOUSE: function(state, action) {
+      return { ... state, house: action.payload };
     },
     SELECT_SEEDS: function(state, action) {
       const seeds = action.payload;
