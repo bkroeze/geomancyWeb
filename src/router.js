@@ -5,8 +5,8 @@ import IndexPage from './routes/IndexPage';
 import FigureExplorer from './routes/FigureExplorer.js';
 import FigureGrid from './routes/FigureGrid.js';
 import FigureFinder from './routes/FigureFinder.js';
-
 import ChartShield from './routes/ChartShield.js';
+import ChartHouse from './routes/ChartHouse.js';
 
 export default function({ history }) {
   return (
@@ -17,6 +17,7 @@ export default function({ history }) {
         <Route path='/figure/grid' component={FigureGrid} />
         <Route path='/figure/finder' component={FigureFinder} />
         <Route path='/chart/shield(/:seeds)' component={ChartShield} />
+        <Route path='/chart/house(/:seeds)' component={ChartHouse} />
       </Router>
     </MuiThemeProvider>
   );

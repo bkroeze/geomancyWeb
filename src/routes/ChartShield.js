@@ -2,28 +2,10 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './ChartShield.css';
 import ShieldChartMaker from '../components/ShieldChartMaker';
+import { makeSeedhash } from '../utils/figure';
 import Logger from 'js-logger';
+
 const log = Logger.get('<ChartShield>');
-
-function makeSlug (fig) {
-  return fig.name.toLowerCase().replace(' ', '-');
-}
-
-function makeSeedhash (chart) {
-  const houses = chart.getHouses();
-  let seeds = [];
-  for (let ix = 0; ix < 4; ix++) {
-    seeds.push(makeSlug(houses[ix].figure));
-  }
-  const seedParam = seeds.join(',');
-  let parts = window.location.hash.split('/');
-  const lastParts = parts.pop().split('?')[0]; // strip querystring
-  if (lastParts !== seedParam) {
-    parts.push(seedParam);
-    log.info('Setting history', parts.join('/'));
-    window.history.pushState({}, 'Chart', parts.join('/'));
-  }
-}
 
 class ChartShield extends React.Component {
   componentWillMount () {
@@ -37,6 +19,8 @@ class ChartShield extends React.Component {
   }
 
   render () {
+    const currUrl = this.props.routes[this.props.routes.length - 1];
+    log.info('Current URL:', currUrl);
     makeSeedhash(this.props.chart);
     const selectFigure = (val) => {
       // log.info('Selected: ', event, index, val)

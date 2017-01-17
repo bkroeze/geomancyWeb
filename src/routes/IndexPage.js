@@ -25,6 +25,10 @@ function IndexPage () {
           <Link to='/chart/shield'> Shield Chart
           </Link>
         </li>
+        <li>
+          <Link to='/chart/house'> House Chart
+          </Link>
+        </li>
       </ul>
     </div>
   );
