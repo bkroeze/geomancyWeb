@@ -27,7 +27,8 @@ class ChartHouse extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      rotation: 90
+      rotation: 90,
+      scaling: .5
     }
   }
 
@@ -51,7 +52,7 @@ class ChartHouse extends React.Component {
     this.setState({rotation: this.state.rotation+1});
   }
 
-  makeData (x, y, sideLen, direction) {
+  makeData (x, y, offset, direction) {
     let x1=x,
       y1=y,
       x2=x,
@@ -61,31 +62,31 @@ class ChartHouse extends React.Component {
 
     switch(direction) {
       case 'S':
-        x1 -= (sideLen * Math.cos(rad45));
-        y1 -= (sideLen * Math.sin(rad45));
-        x2 += (sideLen * Math.cos(rad45));
+        x1 -= offset;
+        y1 -= offset;
+        x2 += offset;
         y2 = y1;
         break;
 
       case 'N':
-        x1 -= (sideLen * Math.cos(rad45));
-        y1 += (sideLen * Math.sin(rad45));
-        x2 += (sideLen * Math.cos(rad45));
+        x1 -= offset;
+        y1 += offset;
+        x2 += offset;
         y2 = y1;
         break;
 
       case 'E':
-        x1 -= (sideLen * Math.cos(rad45));
-        y1 += (sideLen * Math.sin(rad45));
+        x1 -= offset;
+        y1 += offset;
         x2 = x1;
-        y2 -= (sideLen * Math.sin(rad45));
+        y2 -= offset;
         break;
 
       case 'W':
-        x1 += (sideLen * Math.cos(rad45));
-        y1 += (sideLen * Math.sin(rad45));
+        x1 += offset;
+        y1 += offset;
         x2 = x1;
-        y2 -= (sideLen * Math.sin(rad45));
+        y2 -= offset;
         break;
     }
 
@@ -106,9 +107,13 @@ class ChartHouse extends React.Component {
     };
 
     const sizes = {
-      x: 800,
-      y: 800
+      x: 800/this.state.scaling,
+      y: 800/this.state.scaling,
     }
+
+    const rad45 = 45 * Math.PI / 180;
+    const offset = Math.sqrt((sizes.x/2)*(sizes.x/2)/4);
+    log.debug('offset = ' + offset);
 
     // <HouseChartMaker
     //   viewBox={viewbox}
@@ -118,21 +123,22 @@ class ChartHouse extends React.Component {
     //   onFieldSelect={selectField} />
 
     // x, y, rotation
+
     const houseLayout = [
-      [99, 100, 'W'],
-      [74, 144, 'E'],
-      [99, 200, 'N'],
-      [400, 400, 'S'],
+      [0, 2*offset, 'W'],
+      [offset, 3*offset, 'E'],
+      [offset, 3*offset, 'N'],
+      [2*offset, 4*offset, 'S'],
 
-      [],
-      [],
-      [],
-      [],
+      [3*offset, 3*offset, 'N'],
+      [3*offset, 3*offset, 'W'],
+      [4*offset, 2*offset, 'E'],
+      [3*offset, offset, 'W'],
 
-      [],
-      [],
-      [],
-      []
+      [3*offset, offset, 'S'],
+      [2*offset, 0, 'N'],
+      [offset, offset, 'S'],
+      [offset, offset, 'E']
     ]
 
     let triangles = houseLayout.map((pos, ix) => {
@@ -144,21 +150,20 @@ class ChartHouse extends React.Component {
       // rotation={rotation}
 
       return (<Path
-        data={this.makeData(x*5, y*5, 250, direction)}
+        data={this.makeData(x, y, offset, direction)}
         key={'house' + ix}
         fill='red'
         stroke='black'
-        strokeWidth={15}
+        strokeWidth={5/this.state.scaling}
         />);
     });
 
 
     return (
       <div className={styles.normal}>
-        <Stage height={sizes.x*5} width={sizes.y*5} scaleX={.2} scaleY={.2}>
-          <Layer x={0} y={0}
-            ref={(ref) => { this.layer = ref; }}
-          >
+        <Stage height={sizes.x} width={sizes.y}
+          scaleX={this.state.scaling} scaleY={this.state.scaling}>
+          <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
             {triangles}
           </Layer>
         </Stage>
