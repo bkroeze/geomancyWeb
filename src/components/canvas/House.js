@@ -12,7 +12,7 @@ class House extends React.Component {
     y: T.number.isRequired,
     offset: T.number.isRequired,
     direction: T.string.isRequired,
-    selected: T.boolean
+    selected: T.bool
   }
 
   static defaultProps = {

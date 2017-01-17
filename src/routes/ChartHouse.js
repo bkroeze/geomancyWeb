@@ -25,12 +25,10 @@ function startRightClick(el) {
 }
 
 class ChartHouse extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      rotation: 90,
-      scaling: .5
-    }
+  state = {
+    rotation: 90,
+    scaling: .5,
+    selectedHouse: -1
   }
 
   componentDidMount () {
@@ -144,6 +142,10 @@ class ChartHouse extends React.Component {
 
     const houses = houseLayout.map((pos, ix) => {
       const [x, y, direction] = pos;
+      const onClick = () => {
+        log.debug('Clicked ' + ix);
+        this.setState({'selectedHouse': ix})
+      }
 
       return (
         <House
@@ -153,7 +155,8 @@ class ChartHouse extends React.Component {
           direction={direction}
           key={'house_' + ix}
           scaling={this.state.scaling}
-          onClick={() => { console.log('clicked house ' + ix) }}
+          selected={ix === this.state.selectedHouse}
+          onClick={onClick}
         />);
     });
 
