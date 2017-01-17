@@ -12,16 +12,25 @@ class ChartShield extends React.Component {
     log.info('params', this.props.params);
     let { seeds } = this.props.params;
     if (seeds) {
+      this.seeds = seeds;
       seeds = seeds.replace('-', ' ').split(',');
-      log.info('seeds', seeds);
+      log.info('dispatching seeds', this.seeds);
       this.props.dispatch({type: 'chart-shield/SELECT_SEEDS', payload: seeds});
     }
   }
 
-  render () {
-    const currUrl = this.props.routes[this.props.routes.length - 1];
+  updateSeedParam () {
+    const currUrl = this.props.routes[this.props.routes.length - 1].path;
     log.info('Current URL:', currUrl);
-    makeSeedhash(this.props.chart);
+    const newUrl = makeSeedhash(currUrl, this.props.chart, this.seeds);
+    if (window.location.hash !== newUrl) {
+      log.debug('Setting url to history - new seeds:', window.location.hash, newUrl);
+      window.history.pushState({}, 'Chart', newUrl);
+    }
+  }
+
+  render () {
+    this.updateSeedParam();
     const selectFigure = (val) => {
       // log.info('Selected: ', event, index, val)
       this.props.dispatch({type: 'chart-shield/SELECT_FIGURE', payload: val});
