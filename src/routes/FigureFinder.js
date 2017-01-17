@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './FigureFinder.less';
-import FigureBuilder from '../components/FigureBuilder';
-import FigureDetails from '../components/FigureDetails';
+import FigureBuilder from '../components/ui/FigureBuilder';
+import FigureDetails from '../components/svg/FigureDetails';
 import Logger from 'js-logger';
 const log = Logger.get('FigureFinder');
 

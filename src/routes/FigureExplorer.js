@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'dva';
 // import { bindActionCreators } from 'redux'
 import styles from './FigureExplorer.css';
-import FigureDetails from '../components/FigureDetails';
-import FigureChooser from '../components/FigureChooser';
+import FigureDetails from '../components/svg/FigureDetails';
+import FigureChooser from '../components/ui/FigureChooser';
 import Logger from 'js-logger';
 import { actions } from '../models/figure-explorer';
 const log = Logger.get('<FigureExplorer>');

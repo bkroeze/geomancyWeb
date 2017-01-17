@@ -1,0 +1,21 @@
+
+.normal {
+}
+
+.figureBuilder {
+  margin-top: 1em;
+  width: 100px;
+}
+
+.chart {
+  float:left;
+}
+
+.builderBox {
+  float: left;
+}
+
+.buttons {
+  float: left;
+  margin-right: 1em;
+}

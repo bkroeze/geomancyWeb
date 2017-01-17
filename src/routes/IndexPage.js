@@ -22,11 +22,11 @@ function IndexPage () {
           </Link>
         </li>
         <li>
-          <Link to='/chart/shield'> Shield Chart
+          <Link to='/chart/shield/svg'> Shield Chart (SVG)
           </Link>
         </li>
         <li>
-          <Link to='/chart/house'> House Chart
+          <Link to='/chart/house/canvas'> House Chart (Canvas)
           </Link>
         </li>
       </ul>

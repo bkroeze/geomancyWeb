@@ -16,8 +16,8 @@ export default function({ history }) {
         <Route path='/figure/explorer' component={FigureExplorer} />
         <Route path='/figure/grid' component={FigureGrid} />
         <Route path='/figure/finder' component={FigureFinder} />
-        <Route path='/chart/shield(/:seeds)' component={ChartShield} />
-        <Route path='/chart/house(/:seeds)' component={ChartHouse} />
+        <Route path='/chart/shield/svg(/:seeds)' component={ChartShield} />
+        <Route path='/chart/house/canvas(/:seeds)' component={ChartHouse} />
       </Router>
     </MuiThemeProvider>
   );

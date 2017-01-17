@@ -3,9 +3,9 @@ import IconButton from 'material-ui/IconButton';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import styles from './ShieldChartMaker.css';
-import FigureBuilder from './FigureBuilder';
+import FigureBuilder from '../ui/FigureBuilder';
 import ShieldChart from './ShieldChart';
-import { makeElements } from '../utils/figure';
+import { makeElements } from '../../utils/figure';
 import Logger from 'js-logger';
 const log = Logger.get('<ShieldChartMaker>');
 

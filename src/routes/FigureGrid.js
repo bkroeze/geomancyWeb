@@ -1,9 +1,9 @@
 import styles from './FigureGrid.css';
 import React from 'react';
-import {connect} from 'dva';
-import FigureTable from '../components/FigureTable';
+import { connect } from 'dva';
+import FigureTable from '../components/svg/FigureTable';
 
-function FigureGrid(props) {
+function FigureGrid (props) {
   return (
     <div className={styles.normal}>
       <h1>Geomantic Figures</h1>
@@ -12,7 +12,7 @@ function FigureGrid(props) {
   );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {};
 }
 
