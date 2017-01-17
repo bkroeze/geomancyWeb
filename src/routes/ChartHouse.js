@@ -6,6 +6,7 @@ import { makeSeedhash } from '../utils/figure';
 import Logger from 'js-logger';
 import { Stage, Layer, Path } from 'react-konva';
 import { isRightClick, cancelEvent } from '../utils/mouse';
+import House from '../components/canvas/House';
 
 const log = Logger.get('<ChartHouse>');
 
@@ -141,30 +142,27 @@ class ChartHouse extends React.Component {
       [offset, offset, 'E']
     ]
 
-    let triangles = houseLayout.map((pos, ix) => {
-      if (pos.length === 0) {
-        return null;
-      }
+    const houses = houseLayout.map((pos, ix) => {
       const [x, y, direction] = pos;
 
-      // rotation={rotation}
-
-      return (<Path
-        data={this.makeData(x, y, offset, direction)}
-        key={'house' + ix}
-        fill='red'
-        stroke='black'
-        strokeWidth={5/this.state.scaling}
+      return (
+        <House
+          x={x}
+          y={y}
+          offset={offset}
+          direction={direction}
+          key={'house_' + ix}
+          scaling={this.state.scaling}
+          onClick={() => { console.log('clicked house ' + ix) }}
         />);
     });
-
 
     return (
       <div className={styles.normal}>
         <Stage height={sizes.x} width={sizes.y}
           scaleX={this.state.scaling} scaleY={this.state.scaling}>
           <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
-            {triangles}
+            {houses}
           </Layer>
         </Stage>
       </div>
