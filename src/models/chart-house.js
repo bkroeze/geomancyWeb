@@ -8,7 +8,7 @@ export default {
   namespace: 'chart-house',
   state: {
     chart: new Chart(seq),
-    house: 0
+    house: -1
   },
   reducers: {
     SELECT_FIGURE: function(state, action) {

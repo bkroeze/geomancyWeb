@@ -1,8 +1,10 @@
 import React from 'react';
 import { Stage, Layer, Path } from 'react-konva';
+import { Chart } from 'geomancy';
 import { isRightClick, cancelEvent } from '../../utils/mouse';
 import House from './House';
 import styles from './HouseChart.css';
+const T = React.PropTypes;
 
 import Logger from 'js-logger';
 const log = Logger.get('<HouseChart>');
@@ -22,10 +24,17 @@ function startRightClick(el) {
 }
 
 class HouseChart extends React.Component {
-  state = {
-    scaling: .5,
-    selectedHouse: -1
-  }
+  static PropTypes = {
+      chart: T.instanceOf(Chart).isRequired,
+      onClick: T.func.isRequired,
+      selectedHouse: T.number,
+      scaling: T.number
+  };
+
+  static defaultProps = {
+    selectedHouse: -1,
+    scaling: .5
+  };
 
   componentDidMount () {
     stopRightClick(this.layer.canvas._canvas);
@@ -91,13 +100,13 @@ class HouseChart extends React.Component {
   render () {
     // makeSeedhash(this.props.chart);
     const sizes = {
-      x: 800/this.state.scaling,
-      y: 800/this.state.scaling,
+      x: 800/this.props.scaling,
+      y: 800/this.props.scaling,
     }
 
     const rad45 = 45 * Math.PI / 180;
     const offset = Math.sqrt((sizes.x/2)*(sizes.x/2)/4);
-    log.debug('offset = ' + offset);
+    //log.debug('offset = ' + offset);
 
     const houseLayout = [
       [0, 2*offset, 'W'],
@@ -120,9 +129,9 @@ class HouseChart extends React.Component {
 
     const houses = houseLayout.map((pos, ix) => {
       const [x, y, direction] = pos;
-      const onClick = () => {
-        log.debug('Clicked ' + ix);
-        this.setState({'selectedHouse': ix})
+      const onClick = (reactEvt) => {
+        log.debug('Clicked house ' + ix);
+        this.props.onClick(reactEvt, ix);
       }
 
       return (
@@ -132,8 +141,8 @@ class HouseChart extends React.Component {
           offset={offset}
           direction={direction}
           key={'house_' + ix}
-          scaling={this.state.scaling}
-          selected={ix === this.state.selectedHouse}
+          scaling={this.props.scaling}
+          selected={ix === this.props.selectedHouse}
           figure={chartHouses[ix].figure}
           onClick={onClick}
         />);
@@ -142,7 +151,7 @@ class HouseChart extends React.Component {
     return (
       <div className={styles.normal}>
         <Stage height={sizes.x} width={sizes.y}
-          scaleX={this.state.scaling} scaleY={this.state.scaling}>
+          scaleX={this.props.scaling} scaleY={this.props.scaling}>
           <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
             {houses}
           </Layer>
