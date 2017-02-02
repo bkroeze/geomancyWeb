@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import styles from './ChartHouse.css';
 import { makeSeedhash } from '../utils/figure';
 import Logger from 'js-logger';
-import HouseChart from '../components/canvas/HouseChart';
+import HouseChartMaker from '../components/canvas/HouseChartMaker';
 
 const log = Logger.get('<ChartHouse>');
 
@@ -20,7 +20,7 @@ class ChartHouse extends React.Component {
 
     return (
       <div className={styles.normal}>
-        <HouseChart
+        <HouseChartMaker
           chart={this.props.chart}
           selectedHouse={this.props.house}
           onClick={selectHouse}

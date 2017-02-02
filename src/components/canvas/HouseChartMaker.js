@@ -1,51 +1,58 @@
 import React from 'react';
-import IconButton from 'material-ui/IconButton';
-import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import KeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import { Stage, Layer, Path } from 'react-konva';
 import styles from './HouseChartMaker.css';
-import FigureBuilder from '../ui/FigureBuilder';
 import HouseChart from './HouseChart';
-import { makeElements } from '../../utils/figure';
+import HouseChartMenu from './HouseChartMenu'
 import Logger from 'js-logger';
+
 const log = Logger.get('<HouseChartMaker>');
 
-function HouseChartBuilder (props) {
-  const { chart, field } = props;
-  const houses = chart.getHouses();
-  const figure = houses[field].figure;
-  const elements = makeElements(figure);
-  // log.info('rendering', field, houses, figure.name, elements)
+function noRightClick(e) {
+  e.preventDefault();
+  cancelEvent(e);
+}
 
-  const nextField = () => {
-    log.info('next field: ', field + 1);
-    props.onFieldSelect(field + 1);
-  };
+function stopRightClick(el) {
+  log.info('stopping rt click on', el);
+  el.addEventListener("contextmenu", noRightClick);
+}
 
-  const prevField = () => {
-    log.info('prev field: ', field - 1);
-    props.onFieldSelect(field - 1);
-  };
+function startRightClick(el) {
+  el.removeEventListener("contextmenu", noRightClick);
+}
 
-  return (
-    <div>
+class HouseChartMaker extends React.Component {
+  componentDidMount () {
+    stopRightClick(this.layer.canvas._canvas);
+  }
+
+  componentWillUnmount () {
+    startRightClick(this.layer.canvas._canvas);
+  }
+
+  render() {
+    const { chart, house } = props;
+
+    return (
       <div className={styles.chart}>
-        <svg viewBox={props.viewBox.join(' ')} width='400' height='400'>
-          <HouseChart chart={chart} viewBox={props.viewBox} selectedField={field} />
-        </svg>
+        <Stage height={sizes.x} width={sizes.y}
+          scaleX={this.props.scaling} scaleY={this.props.scaling}>
+          <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
+            <HouseChart
+              chart={chart}
+              selectedHouse={this.props.house}
+              onHouseSelect={onHouseSelect} />
+            <HouseChartMenu
+              x={0}
+              y={0}
+              scaling={this.props.scaling}
+              house={this.props.house}
+              onFigureSelect={this.props.onFigureSelect} />
+          </Layer>
+        </Stage>
       </div>
-      <div className={styles.builderBox}>
-        <div className={styles.figureBuilder}>
-          <IconButton disabled={field > 2} onClick={nextField} className={styles.buttons}>
-            <KeyboardArrowLeft />
-          </IconButton>
-          <IconButton disabled={field < 1} onClick={prevField} className={styles.buttons}>
-            <KeyboardArrowRight />
-          </IconButton>
-          <FigureBuilder elements={elements} onSelect={props.onFigureSelect} />
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default HouseChartBuilder;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Stage, Layer, Path } from 'react-konva';
 import { Chart } from 'geomancy';
+import { Group } from 'react-konva';
 import { isRightClick, cancelEvent } from '../../utils/mouse';
 import House from './House';
 import styles from './HouseChart.css';
@@ -8,20 +8,6 @@ const T = React.PropTypes;
 
 import Logger from 'js-logger';
 const log = Logger.get('<HouseChart>');
-
-function noRightClick(e) {
-  e.preventDefault();
-  cancelEvent(e);
-}
-
-function stopRightClick(el) {
-  log.info('stopping rt click on', el);
-  el.addEventListener("contextmenu", noRightClick);
-}
-
-function startRightClick(el) {
-  el.removeEventListener("contextmenu", noRightClick);
-}
 
 class HouseChart extends React.Component {
   static PropTypes = {
@@ -38,16 +24,6 @@ class HouseChart extends React.Component {
 
   componentDidMount () {
     stopRightClick(this.layer.canvas._canvas);
-  }
-
-  componentWillMount () {
-    // log.info('params', this.props.params);
-    // let { seeds } = this.props.params;
-    // if (seeds) {
-    //   seeds = seeds.replace('-', ' ').split(',');
-    //   log.info('seeds', seeds);
-    //   this.props.dispatch({type: 'chart-house/SELECT_SEEDS', payload: seeds});
-    // }
   }
 
   componentWillUnmount () {
@@ -149,14 +125,9 @@ class HouseChart extends React.Component {
     });
 
     return (
-      <div className={styles.normal}>
-        <Stage height={sizes.x} width={sizes.y}
-          scaleX={this.props.scaling} scaleY={this.props.scaling}>
-          <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
-            {houses}
-          </Layer>
-        </Stage>
-      </div>
+      <Group>
+        {houses}
+      </Group>
     );
   }
 }

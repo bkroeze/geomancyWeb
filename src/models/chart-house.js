@@ -17,7 +17,12 @@ export default {
       return { ...state, chart };
     },
     SELECT_HOUSE: function(state, action) {
-      return { ... state, house: action.payload };
+      let house = action.payload;
+      // toggle
+      if (state.house === house) {
+        house = -1;
+      }
+      return { ... state, house };
     },
     SELECT_SEEDS: function(state, action) {
       const seeds = action.payload;
