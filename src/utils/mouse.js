@@ -187,3 +187,16 @@ export function isRightClick (evt) {
 
   return isRightMB;
 };
+
+function noRightClick(e) {
+  e.preventDefault();
+  cancelEvent(e);
+}
+
+export function toggleRightClick(state, el) {
+  if (state) {
+    el.removeEventListener("contextmenu", noRightClick);
+  } else {
+    el.addEventListener("contextmenu", noRightClick);
+  }
+}

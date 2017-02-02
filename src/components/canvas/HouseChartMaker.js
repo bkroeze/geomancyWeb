@@ -2,52 +2,70 @@ import React from 'react';
 import { Stage, Layer, Path } from 'react-konva';
 import styles from './HouseChartMaker.css';
 import HouseChart from './HouseChart';
-import HouseChartMenu from './HouseChartMenu'
+import HouseChartMenu from './HouseChartMenu';
+import { toggleRightClick } from '../../utils/mouse';
 import Logger from 'js-logger';
 
 const log = Logger.get('<HouseChartMaker>');
-
-function noRightClick(e) {
-  e.preventDefault();
-  cancelEvent(e);
-}
-
-function stopRightClick(el) {
-  log.info('stopping rt click on', el);
-  el.addEventListener("contextmenu", noRightClick);
-}
-
-function startRightClick(el) {
-  el.removeEventListener("contextmenu", noRightClick);
-}
+const T = React.PropTypes;
 
 class HouseChartMaker extends React.Component {
+  static propTypes = {
+    onFigureSelect: T.func.isRequired,
+    onHouseSelect: T.func,
+    selectedHouse: T.number.isRequired,
+    sizes: T.object,
+    scaling: T.number
+  }
+
+  static defaultProps = {
+    scaling: .5,
+    sizes: {
+      width: 800,
+      height: 800
+    }
+  }
+
+  state = {
+    selectedHouse: -1
+  }
+
   componentDidMount () {
-    stopRightClick(this.layer.canvas._canvas);
+    toggleRightClick(false, this.layer.canvas._canvas);
   }
 
   componentWillUnmount () {
-    startRightClick(this.layer.canvas._canvas);
+    toggleRightClick(true, this.layer.canvas._canvas);
+  }
+
+  handleHouseSelect = (reactEvt, house) => {
+    this.setState({selectedHouse: house});
+    if (this.props.onHouseSelect) {
+      this.props.onHouseSelect(reactEvt, house);
+    }
   }
 
   render() {
-    const { chart, house } = props;
+    const { chart, sizes, scaling, onFigureSelect } = this.props;
 
     return (
       <div className={styles.chart}>
-        <Stage height={sizes.x} width={sizes.y}
-          scaleX={this.props.scaling} scaleY={this.props.scaling}>
+        <Stage height={sizes.height} width={sizes.width}
+          scaleX={scaling} scaleY={scaling}>
           <Layer x={0} y={0} ref={(ref) => { this.layer = ref; }}>
             <HouseChart
               chart={chart}
-              selectedHouse={this.props.house}
-              onHouseSelect={onHouseSelect} />
+              sizes={sizes}
+              selectedHouse={this.state.selectedHouse}
+              onHouseSelect={this.handleHouseSelect}
+              />
             <HouseChartMenu
               x={0}
               y={0}
-              scaling={this.props.scaling}
-              house={this.props.house}
-              onFigureSelect={this.props.onFigureSelect} />
+              scaling={scaling}
+              sizes={sizes}
+              house={this.state.selectedHouse}
+              onFigureSelect={onFigureSelect} />
           </Layer>
         </Stage>
       </div>
@@ -55,4 +73,4 @@ class HouseChartMaker extends React.Component {
   }
 }
 
-export default HouseChartBuilder;
+export default HouseChartMaker;

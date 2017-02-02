@@ -9,34 +9,28 @@ const T = React.PropTypes;
 import Logger from 'js-logger';
 const log = Logger.get('<HouseChart>');
 
+const rad45 = 46 * Math.PI / 180;
+
 class HouseChart extends React.Component {
   static PropTypes = {
       chart: T.instanceOf(Chart).isRequired,
-      onClick: T.func.isRequired,
+      onHouseSelect: T.func.isRequired,
       selectedHouse: T.number,
-      scaling: T.number
+      scaling: T.number,
+      sizes: T.object
   };
 
   static defaultProps = {
     selectedHouse: -1,
-    scaling: .5
+    scaling: .5,
+    sizes: {
+      x: 800,
+      y: 800
+    }
   };
 
-  componentDidMount () {
-    stopRightClick(this.layer.canvas._canvas);
-  }
-
-  componentWillUnmount () {
-    startRightClick(this.layer.canvas._canvas);
-  }
-
-  makeData (x, y, offset, direction) {
-    let x1=x,
-      y1=y,
-      x2=x,
-      y2=y;
-
-    const rad45 = 46 * Math.PI / 180;
+  makeData (x1, y1, offset, direction) {
+    let x2=x1, y2=y2;
 
     switch(direction) {
       case 'S':
@@ -76,8 +70,8 @@ class HouseChart extends React.Component {
   render () {
     // makeSeedhash(this.props.chart);
     const sizes = {
-      x: 800/this.props.scaling,
-      y: 800/this.props.scaling,
+      x: this.props.sizes.width/this.props.scaling,
+      y: this.props.sizes.height/this.props.scaling,
     }
 
     const rad45 = 45 * Math.PI / 180;
@@ -105,9 +99,9 @@ class HouseChart extends React.Component {
 
     const houses = houseLayout.map((pos, ix) => {
       const [x, y, direction] = pos;
-      const onClick = (reactEvt) => {
+      const onHouseSelect = (reactEvt) => {
         log.debug('Clicked house ' + ix);
-        this.props.onClick(reactEvt, ix);
+        this.props.onHouseSelect(reactEvt, ix);
       }
 
       return (
@@ -120,7 +114,7 @@ class HouseChart extends React.Component {
           scaling={this.props.scaling}
           selected={ix === this.props.selectedHouse}
           figure={chartHouses[ix].figure}
-          onClick={onClick}
+          onClick={onHouseSelect}
         />);
     });
 

@@ -14,17 +14,13 @@ class ChartHouse extends React.Component {
       this.props.dispatch({type: 'chart-house/SELECT_FIGURE', payload: val});
     };
 
-    const selectHouse = (reactEvt, val) => {
-      this.props.dispatch({type: 'chart-house/SELECT_HOUSE', payload: val});
-    };
-
     return (
       <div className={styles.normal}>
         <HouseChartMaker
           chart={this.props.chart}
           selectedHouse={this.props.house}
-          onClick={selectHouse}
-          scaling='.5'/>
+          onFigureSelect={selectFigure}
+          scaling={.5}/>
       </div>
     );
   }
