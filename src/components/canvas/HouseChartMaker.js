@@ -47,6 +47,7 @@ class HouseChartMaker extends React.Component {
 
   render() {
     const { chart, sizes, scaling, onFigureSelect } = this.props;
+    const { selectedHouse } = this.state;
 
     return (
       <div className={styles.chart}>
@@ -56,7 +57,7 @@ class HouseChartMaker extends React.Component {
             <HouseChart
               chart={chart}
               sizes={sizes}
-              selectedHouse={this.state.selectedHouse}
+              selectedHouse={selectedHouse}
               onHouseSelect={this.handleHouseSelect}
               />
             <HouseChartMenu
@@ -64,7 +65,8 @@ class HouseChartMaker extends React.Component {
               y={0}
               scaling={scaling}
               sizes={sizes}
-              house={this.state.selectedHouse}
+              house={selectedHouse}
+              chart={chart}
               onFigureSelect={onFigureSelect} />
           </Layer>
         </Stage>

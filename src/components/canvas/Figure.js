@@ -78,6 +78,7 @@ export class Figure extends React.Component {
         height={this.props.height}
         active={active}
         key={key}
+        selected={this.props.selected}
         />
     );
   }
