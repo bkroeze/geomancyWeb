@@ -2,6 +2,7 @@ import React from 'react';
 import { Figure as GeoFigure, Chart } from 'geomancy';
 import { Rect, Group, Circle, Text } from 'react-konva';
 import FigureSelectorTable from './FigureSelectorTable';
+import Button from './Button';
 import Logger from 'js-logger';
 const log = Logger.get('<HouseChartMenu>');
 const T = React.PropTypes;
@@ -21,6 +22,13 @@ export default class HouseChartMenu extends React.Component {
     scaling: .5
   }
 
+  handleFigureSelect = (reactEvt, figure) => {
+    if (this.props.house < 4) {
+      // only the mothers!
+      this.props.onFigureSelect(reactEvt, figure);
+    }
+  }
+
   render () {
     if (this.props.house < 0) {
       return <Group />;
@@ -38,6 +46,28 @@ export default class HouseChartMenu extends React.Component {
 
     const house = this.props.chart.getHouses()[this.props.house];
     const figure = house.figure;
+    log.info('Selected figure', figure);
+
+    let options;
+
+    if (this.props.house < 4) {
+      options = (
+        <FigureSelectorTable
+          x={117}
+          y={180}
+          height={sizes.height-120}
+          width={sizes.width-40}
+          selected={figure}
+          onSelect={this.handleFigureSelect}
+        />);
+    } else {
+      let onClick = (evt) => {
+        log.info('Clicked button');
+      }
+      options = (
+        <Button x={117} y={180} width={200} name="House Details" onClick={onClick}/>
+      );
+    }
 
     return (
       <Group
@@ -65,14 +95,7 @@ export default class HouseChartMenu extends React.Component {
           fontStyle='normal'
           fontSize={sizes.fontSize}
         />
-        <FigureSelectorTable
-          x={100}
-          y={180}
-          height={sizes.height-120}
-          width={sizes.width-40}
-          selected={figure}
-          osSelect={this.props.onFigureSelect}
-        />
+        {options}
       </Group>
     );
   }
