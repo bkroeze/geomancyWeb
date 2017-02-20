@@ -17,12 +17,10 @@ export default {
       return { ...state, chart };
     },
     SELECT_HOUSE: function (state, action) {
-      let house = action.payload;
-      // toggle
-      if (state.house === house) {
-        house = -1;
+      if (state.house == action.payload) {
+        return { ...state, house: -1 };
       }
-      return { ...state, house };
+      return { ...state, house: action.payload};
     },
     SELECT_SEEDS: function (state, action) {
       const seeds = action.payload;

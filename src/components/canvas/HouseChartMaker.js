@@ -26,10 +26,6 @@ class HouseChartMaker extends React.Component {
     }
   }
 
-  state = {
-    selectedHouse: -1
-  }
-
   componentDidMount () {
     toggleRightClick(false, this.layer.canvas._canvas);
   }
@@ -46,8 +42,7 @@ class HouseChartMaker extends React.Component {
   }
 
   render() {
-    const { chart, sizes, scaling, onFigureSelect } = this.props;
-    const { selectedHouse } = this.state;
+    const { chart, sizes, scaling, onFigureSelect, selectedHouse } = this.props;
 
     return (
       <div className={styles.chart}>
