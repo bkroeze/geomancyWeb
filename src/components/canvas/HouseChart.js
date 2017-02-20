@@ -63,12 +63,12 @@ class HouseChart extends React.Component {
     }
 
     const data= `M ${x} ${y} L ${x1} ${y1} L ${x2} ${y2} L ${x} ${y} Z`;
-    log.debug('Data:', data);
+    //log.debug('Data:', data);
     return data;
   }
 
   render () {
-    log.info('props', this.props);
+    //log.info('props', this.props);
     // makeSeedhash(this.props.chart);
     const sizes = {
       x: this.props.sizes.width/this.props.scaling,
@@ -97,7 +97,7 @@ class HouseChart extends React.Component {
     ]
 
     const chartHouses = this.props.chart.getHouses();
-    log.info('selectedHouse=' + this.props.selectedHouse);
+    //log.info('selectedHouse=' + this.props.selectedHouse);
 
     const houses = houseLayout.map((pos, ix) => {
       const [x, y, direction] = pos;
@@ -106,7 +106,7 @@ class HouseChart extends React.Component {
         this.props.onHouseSelect(reactEvt, ix);
       }
 
-      log.debug('House ' + ix + ' selected ' + (ix === this.props.selectedHouse));
+      //log.debug('House ' + ix + ' selected ' + (ix === this.props.selectedHouse));
 
       return (
         <House
