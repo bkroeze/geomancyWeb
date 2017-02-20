@@ -15,11 +15,13 @@ export default class HouseChartMenu extends React.Component {
     y: T.number.isRequired,
     scaling: T.number,
     sizes: T.object.isRequired,
-    onFigureSelect: T.func
+    onFigureSelect: T.func,
+    fill: T.string
   }
 
   static defaultProps = {
-    scaling: .5
+    scaling: .5,
+    fill: '#ddd'
   }
 
   handleFigureSelect = (reactEvt, figure) => {
@@ -59,6 +61,7 @@ export default class HouseChartMenu extends React.Component {
           width={sizes.width-40}
           selected={figure}
           onSelect={this.handleFigureSelect}
+          fill={this.props.fill}
         />);
     } else {
       let onClick = (evt) => {
@@ -78,7 +81,7 @@ export default class HouseChartMenu extends React.Component {
           y={0}
           width={sizes.width}
           height={sizes.height}
-          fill="#ddd"
+          fill={this.props.fill}
           stroke='black'
           strokeWidth={sizes.strokeWidth}
           />

@@ -15,12 +15,14 @@ class FigureSelectorTable extends React.Component {
     selected: T.instanceOf(GeoFigure),
     width: T.number.isRequired,
     height: T.number.isRequired,
-    onSelect: T.func
+    onSelect: T.func,
+    fill: T.string,
   }
 
   static defaultProps = {
     selected: null,
-    onSelect: null
+    onSelect: null,
+    fill: '#fff'
   }
 
   render () {
@@ -39,7 +41,7 @@ class FigureSelectorTable extends React.Component {
       // <Rect x={-width/2} y={-height/2} width={width} height={height} onClick={onClick} fill="#fff" stroke="gray" strokeWidth={2} />
       figures.push(
         <Group x={x} y={y} key={fig.name} onClick={onClick}>
-          <Rect x={-width/2} y={-height/2} width={width} height={height} fill="#fff" />
+          <Rect x={-width/2} y={-height/2} width={width} height={height} fill={this.props.fill} />
           <Figure figure={fig} x={0} y={0} selected={fig.name == this.props.selected.name} />
         </Group>
       );
