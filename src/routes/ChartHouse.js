@@ -1,50 +1,15 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ChartHouse.css';
-import { makeSeedhash, getSeeds, makeSlug } from '../utils/figure';
-import Logger from 'js-logger';
 import HouseChartMaker from '../components/canvas/HouseChartMaker';
+import ChartBase from './ChartBase';
+import Logger from 'js-logger';
 
-const log = Logger.get('<ChartHouse>');
-
-class ChartHouse extends React.Component {
-  componentWillMount () {
-    let {seeds} = this.props.params;
-
-    if (!seeds) {
-      log.info('no seeds, making one');
-      this.updateSeedParam();
-    } else {
-      let chartSeeds = getSeeds(this.props.chart);
-      let cSeeds = chartSeeds.map(s => s.toLowerCase().replace(' ', '-'));
-      cSeeds = cSeeds.join(',');
-      if (cSeeds !== seeds) {
-        log.debug('Not same seeds, we need to load that chart', seeds, cSeeds);
-        this.props.dispatch({type: 'chart-house/SELECT_SEEDS', payload: seeds.replace('-', ' ').split(',')});
-      }
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const currUrl = this.props.routes[this.props.routes.length - 1].path;
-    const newUrl = makeSeedhash(currUrl, nextProps.chart, this.props.seeds);
-    if (window.location.hash !== newUrl) {
-      log.debug('Setting url to history on prop change - new seeds:', window.location.hash, newUrl);
-      window.history.pushState({}, 'Chart', newUrl);
-    }
-  }
-
-  updateSeedParam () {
-    const currUrl = this.props.routes[this.props.routes.length - 1].path;
-    log.info('Current URL:', currUrl);
-    const newUrl = makeSeedhash(currUrl, this.props.chart, this.props.seeds);
-    if (window.location.hash !== newUrl) {
-      log.debug('Setting url to history - new seeds:', window.location.hash, newUrl);
-      window.history.pushState({}, 'Chart', newUrl);
-      const seeds = getSeeds(this.props.chart);
-      log.debug('seeds', seeds);
-      this.props.dispatch({type: 'chart-house/SELECT_SEEDS', payload: seeds});
-    }
+class ChartHouse extends ChartBase {
+  constructor (props) {
+    super(props);
+    this.log = Logger.get('<ChartHouse>');
+    this.namespace = 'chart-house';
   }
 
   render () {
