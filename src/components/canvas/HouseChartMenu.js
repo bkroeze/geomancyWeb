@@ -22,11 +22,27 @@ export default class HouseChartMenu extends React.Component {
     fill: '#ddd'
   }
 
+  state = {
+    selector: 'menu'
+  }
+
+  handleDetailsButton = (evt) => {
+    this.setState({selector: 'details'});
+  }
+
   handleFigureSelect = (reactEvt, figure) => {
     if (this.props.house < 4) {
       // only the mothers!
       this.props.onFigureSelect(reactEvt, figure);
     }
+  }
+
+  handleFigureButton = (evt) => {
+    this.setState({selector: 'figure'});
+  }
+
+  componentWillReceiveProps() {
+    this.setState({selector: 'menu'});
   }
 
   render () {
@@ -38,7 +54,7 @@ export default class HouseChartMenu extends React.Component {
       width: (this.props.sizes.width),
       height: (this.props.sizes.height),
       strokeWidth: 5,
-      fontSize: 32,
+      fontSize: 48,
       x: this.props.x + (this.props.sizes.width/2),
       y: this.props.y + (this.props.sizes.height/2),
       controlX: this.props.sizes.width/8,
@@ -48,27 +64,56 @@ export default class HouseChartMenu extends React.Component {
     const house = this.props.chart.getHouses()[this.props.house];
     const figure = house.figure;
     log.info('Selected figure', figure);
+    log.info('state', this.state);
 
-    let options;
+    let body;
 
-    if (this.props.house < 4) {
-      options = (
-        <FigureSelectorTable
-          x={sizes.controlX}
-          y={sizes.controlY}
-          height={sizes.height}
-          width={sizes.width}
-          selected={figure}
-          onSelect={this.handleFigureSelect}
-          fill={this.props.fill}
-        />);
-    } else {
-      let onClick = (evt) => {
-        log.info('Clicked button');
-      }
-      options = (
-        <Button x={117} y={180} width={200} name="House Details" onClick={onClick}/>
-      );
+    switch (this.state.selector) {
+      case 'figure':
+        body = (
+          <FigureSelectorTable
+            x={sizes.controlX}
+            y={sizes.controlY}
+            height={sizes.height}
+            width={sizes.width}
+            selected={figure}
+            onSelect={this.handleFigureSelect}
+            fill={this.props.fill}
+          />);
+          break;
+      case 'menu':
+        let changeFig = null;
+        if (this.props.house < 4) {
+          changeFig = (<Button x={350} y={0} width={300} height={80} fontSize={40}
+            name="Change Figure" onClick={this.handleFigureButton}
+            />);
+        }
+
+        body = (
+          <Group x={75} y={120}>
+            <Button x={0} y={0} width={300} height={80} fontSize={40}
+              name="House Details" onClick={this.handleDetailsButton}
+              />
+            {changeFig}
+          </Group>
+        );
+        break;
+      case 'details':
+        body = (
+          <Text
+            x={0}
+            y={120}
+            width={sizes.width-40}
+            height={100}
+            align='center'
+            text='details'
+            wrap='word'
+            fill='black'
+            fontFamily='arial'
+            fontStyle='normal'
+            fontSize={sizes.fontSize}
+            />
+        );
     }
 
     return (
@@ -97,7 +142,7 @@ export default class HouseChartMenu extends React.Component {
           fontStyle='normal'
           fontSize={sizes.fontSize}
         />
-        {options}
+        {body}
       </Group>
     );
   }

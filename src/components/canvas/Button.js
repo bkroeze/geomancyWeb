@@ -12,17 +12,19 @@ class Button extends React.Component {
     y: T.number.isRequired,
     height: T.number,
     width: T.number,
-    fill: T.string
+    fill: T.string,
+    fontSize: T.number
   }
 
   static defaultProps = {
     height: 30,
     width: 200,
-    fill: '#aaa'
+    fill: '#aaa',
+    fontSize: 20
   }
 
   render () {
-    const tY = Math.floor(this.props.height/2-10);
+    const tY = Math.floor(this.props.height/2-this.props.fontSize/2);
     return (
       <Group x={this.props.x} y={this.props.y}
         onClick={evt => this.props.onClick(evt)}>
@@ -38,7 +40,7 @@ class Button extends React.Component {
           align='center'
           text={this.props.name}
           fill='black'
-          fontSize={20}
+          fontSize={this.props.fontSize}
         />
       </Group>
     );
