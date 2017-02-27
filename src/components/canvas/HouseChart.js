@@ -110,6 +110,7 @@ class HouseChart extends React.Component {
 
       return (
         <House
+          house={ix}
           x={x}
           y={y}
           offset={offset}
@@ -119,6 +120,7 @@ class HouseChart extends React.Component {
           selected={ix === this.props.selectedHouse}
           figure={chartHouses[ix].figure}
           onClick={onHouseSelect}
+          showAnnotations={true}
         />);
     });
 

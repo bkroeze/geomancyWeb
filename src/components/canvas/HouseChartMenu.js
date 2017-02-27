@@ -87,7 +87,7 @@ export default class HouseChartMenu extends React.Component {
           changeFig = (<Button x={350} y={0} width={300} height={80} fontSize={40}
             name="Change Figure" onClick={this.handleFigureButton}
             />);
-        }
+        }    
 
         body = (
           <Group x={75} y={120}>

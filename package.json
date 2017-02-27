@@ -9,6 +9,7 @@
     "geomancy": "^1.0.7",
     "js-logger": "^1.3.0",
     "konva": "^1.3.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.16.5",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
