@@ -39,6 +39,7 @@ class FigureSelectorTable extends React.Component {
       const x = i % 4 * this.props.width / 4
       const y = Math.floor(i/4) * this.props.height / 4;
       // <Rect x={-width/2} y={-height/2} width={width} height={height} onClick={onClick} fill="#fff" stroke="gray" strokeWidth={2} />
+      log.debug(`i=${i} x=${x} y=${y} width=${width} height=${height}`);
       figures.push(
         <Group x={x} y={y} key={fig.name} onClick={onClick}>
           <Rect x={-width/2} y={-height/2} width={width} height={height} fill={this.props.fill} />

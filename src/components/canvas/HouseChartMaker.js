@@ -58,7 +58,7 @@ class HouseChartMaker extends React.Component {
             <HouseChartMenu
               x={0}
               y={0}
-              scaling={scaling}
+              scaling={1}
               sizes={sizes}
               house={selectedHouse}
               chart={chart}

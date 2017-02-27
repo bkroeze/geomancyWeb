@@ -30,7 +30,7 @@ class ChartHouse extends ChartBase {
           selectedHouse={house}
           onFigureSelect={selectFigure}
           onHouseSelect={selectHouse}
-          scaling={0.5} />
+          scaling={0.25} />
       </div>
     );
   }

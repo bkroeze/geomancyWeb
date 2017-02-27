@@ -13,14 +13,12 @@ export default class HouseChartMenu extends React.Component {
     chart: T.instanceOf(Chart).isRequired,
     x: T.number.isRequired,
     y: T.number.isRequired,
-    scaling: T.number,
     sizes: T.object.isRequired,
     onFigureSelect: T.func,
     fill: T.string
   }
 
   static defaultProps = {
-    scaling: .5,
     fill: '#ddd'
   }
 
@@ -36,14 +34,15 @@ export default class HouseChartMenu extends React.Component {
       return <Group />;
     }
     const message = "Selected House: " + this.props.house;
-    const { scaling } = this.props;
     const sizes = {
-      width: (this.props.sizes.width/2) / scaling,
-      height: (this.props.sizes.height/2) / scaling,
-      strokeWidth: 5 / scaling,
-      fontSize: 32 / scaling,
-      x: this.props.x + (this.props.sizes.width*.25) / scaling,
-      y: this.props.y + (this.props.sizes.height*.25) / scaling
+      width: (this.props.sizes.width),
+      height: (this.props.sizes.height),
+      strokeWidth: 5,
+      fontSize: 32,
+      x: this.props.x + (this.props.sizes.width/2),
+      y: this.props.y + (this.props.sizes.height/2),
+      controlX: this.props.sizes.width/8,
+      controlY: this.props.sizes.height/8
     };
 
     const house = this.props.chart.getHouses()[this.props.house];
@@ -55,10 +54,10 @@ export default class HouseChartMenu extends React.Component {
     if (this.props.house < 4) {
       options = (
         <FigureSelectorTable
-          x={117}
-          y={180}
-          height={sizes.height-120}
-          width={sizes.width-40}
+          x={sizes.controlX}
+          y={sizes.controlY}
+          height={sizes.height}
+          width={sizes.width}
           selected={figure}
           onSelect={this.handleFigureSelect}
           fill={this.props.fill}
