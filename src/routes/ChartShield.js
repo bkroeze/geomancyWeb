@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import styles from './ChartShield.css';
 import ShieldChartMaker from '../components/svg/ShieldChartMaker';
 import ChartBase from './ChartBase';
+import { getSeeds } from '../utils/figure';
 import Logger from 'js-logger';
 
 class ChartShield extends ChartBase {
@@ -24,6 +25,12 @@ class ChartShield extends ChartBase {
 
     const viewbox = [0, 0, 1000, 750];
 
+    const {chart, house} = this.props;
+    let chartSeeds = getSeeds(this.props.chart);
+    let seeds = chartSeeds.map(s => s.toLowerCase().replace(' ', '-'));
+    seeds = seeds.join(',');
+    this.log.info('Seeds', seeds);
+
     return (
       <div className={styles.normal}>
         <ShieldChartMaker
@@ -32,6 +39,9 @@ class ChartShield extends ChartBase {
           field={this.props.field}
           onFigureSelect={selectFigure}
           onFieldSelect={selectField} />
+          <p>
+            <a href={'#/chart/house/canvas/' + seeds}>House Chart</a>
+          </p>
       </div>
     );
   }

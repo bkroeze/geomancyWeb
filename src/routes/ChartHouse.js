@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './ChartHouse.css';
 import HouseChartMaker from '../components/canvas/HouseChartMaker';
+import { getSeeds } from '../utils/figure';
 import ChartBase from './ChartBase';
 import Logger from 'js-logger';
 
@@ -22,6 +23,10 @@ class ChartHouse extends ChartBase {
     };
 
     const {chart, house} = this.props;
+    let chartSeeds = getSeeds(this.props.chart);
+    let seeds = chartSeeds.map(s => s.toLowerCase().replace(' ', '-'));
+    seeds = seeds.join(',');
+    this.log.info('Seeds', seeds);
 
     return (
       <div className={styles.normal}>
@@ -31,6 +36,9 @@ class ChartHouse extends ChartBase {
           onFigureSelect={selectFigure}
           onHouseSelect={selectHouse}
           scaling={0.25} />
+        <p>
+          <a href={'#/chart/shield/svg/' + seeds}>Shield Chart</a>
+        </p>
       </div>
     );
   }
