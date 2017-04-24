@@ -39,9 +39,9 @@ class ChartShield extends ChartBase {
           field={this.props.field}
           onFigureSelect={selectFigure}
           onFieldSelect={selectField} />
-          <p>
-            <a href={'#/chart/house/canvas/' + seeds}>House Chart</a>
-          </p>
+        <p>
+          <a href={'#/chart/house/canvas/' + seeds}>House Chart</a>
+        </p>
       </div>
     );
   }

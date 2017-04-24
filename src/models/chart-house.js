@@ -33,6 +33,18 @@ export default {
       }
       const chart = new Chart(seq);
       return { ...state, chart };
+    },
+    SELECT_QUERENT: function (state, action) {
+      log.debug('Querent now', action.payload);
+      const chart = state.chart.clone();
+      chart.querent = action.payload;
+      return { ...state, chart };
+    },
+    SELECT_QUESITED: function (state, action) {
+      log.debug('Quesited now', action.payload);
+      const chart = state.chart.clone();
+      chart.quesited = action.payload;
+      return { ...state, chart };
     }
   },
   effects: {},

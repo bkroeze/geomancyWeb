@@ -22,6 +22,14 @@ class ChartHouse extends ChartBase {
       this.props.dispatch({type: 'chart-house/SELECT_HOUSE', payload: val});
     };
 
+    const selectQuerent = (reactEvt, val) => {
+      this.props.dispatch({type: 'chart-house/SELECT_QUERENT', payload: val});
+    };
+
+    const selectQuesited = (reactEvt, val) => {
+      this.props.dispatch({type: 'chart-house/SELECT_QUESITED', payload: val});
+    };
+
     const {chart, house} = this.props;
     let chartSeeds = getSeeds(this.props.chart);
     let seeds = chartSeeds.map(s => s.toLowerCase().replace(' ', '-'));
@@ -35,6 +43,8 @@ class ChartHouse extends ChartBase {
           selectedHouse={house}
           onFigureSelect={selectFigure}
           onHouseSelect={selectHouse}
+          onQuesitedSelect={selectQuesited}
+          onQuerentSelect={selectQuerent}
           scaling={0.25} />
         <p>
           <a href={'#/chart/shield/svg/' + seeds}>Shield Chart</a>

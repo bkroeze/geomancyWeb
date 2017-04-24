@@ -15,6 +15,8 @@ export default class HouseChartMenu extends React.Component {
     y: T.number.isRequired,
     sizes: T.object.isRequired,
     onFigureSelect: T.func,
+    onQuerentSelect: T.func,
+    onQuesitedSelect: T.func,
     fill: T.string
   }
 
@@ -39,6 +41,14 @@ export default class HouseChartMenu extends React.Component {
 
   handleFigureButton = (evt) => {
     this.setState({selector: 'figure'});
+  }
+
+  handleQeurentButton = (evt) => {
+    this.props.onQuerentSelect(evt, this.props.house);
+  }
+
+  handleQeusitedButton = (evt) => {
+    this.props.onQuesitedSelect(evt, this.props.house);
   }
 
   componentWillReceiveProps() {
@@ -84,15 +94,21 @@ export default class HouseChartMenu extends React.Component {
       case 'menu':
         let changeFig = null;
         if (this.props.house < 4) {
-          changeFig = (<Button x={350} y={0} width={300} height={80} fontSize={40}
-            name="Change Figure" onClick={this.handleFigureButton}
+          changeFig = (<Button x={600} y={0} width={175} height={80} fontSize={40}
+            name="Figure" onClick={this.handleFigureButton}
             />);
-        }    
+        }
 
         body = (
-          <Group x={75} y={120}>
-            <Button x={0} y={0} width={300} height={80} fontSize={40}
-              name="House Details" onClick={this.handleDetailsButton}
+          <Group x={15} y={100}>
+            <Button x={0} y={0} width={175} height={80} fontSize={40}
+              name="Details" onClick={this.handleDetailsButton}
+              />
+            <Button x={200} y={0} width={175} height={80} fontSize={40}
+              name="querent" onClick={this.handleQeurentButton}
+              />
+            <Button x={400} y={0} width={175} height={80} fontSize={40}
+              name="Quesited" onClick={this.handleQeusitedButton}
               />
             {changeFig}
           </Group>
